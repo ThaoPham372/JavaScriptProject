@@ -18,35 +18,75 @@
         font-size: 18px;
         color: #555;
         transition: background-image 0.3s ease;
+        text-align: center;
+        padding: 10px;
       }
+
       img {
         width: 100px;
         margin-right: 10px;
         cursor: pointer;
+        border: 2px solid transparent;
+      }
+
+      img:focus {
+        outline: none;
+        border-color: blue;
       }
     </style>
   </head>
   <body>
     <div id="image">Hover over an image below to display here.</div>
-  <img src="images/11.jpg" alt="Ảnh đầu tiên của tôi" onmouseover="upDate(this)" onmouseout="undo()" />
-  <img src="images/15.jpg" alt="Ảnh thứ hai của tôi" onmouseover="upDate(this)" onmouseout="undo()" />
-  <img src="images/19.jpg" alt="Ảnh thứ ba của tôi" onmouseover="upDate(this)" onmouseout="undo()" />
 
+    <!-- Dùng ảnh online từ Unsplash để chắc chắn load được -->
+    <img
+      src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=100&h=100&q=80"
+      alt="Ảnh đầu tiên: Núi"
+      onmouseover="upDate(this)"
+      onmouseout="undo()"
+      onfocus="upDate(this)"
+      onblur="undo()"
+      tabindex="0"
+    />
+
+    <img
+      src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=100&h=100&q=80"
+      alt="Ảnh thứ hai: Bãi biển"
+      onmouseover="upDate(this)"
+      onmouseout="undo()"
+      onfocus="upDate(this)"
+      onblur="undo()"
+      tabindex="0"
+    />
+
+    <img
+      src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=100&h=100&q=80"
+      alt="Ảnh thứ ba: Rừng cây"
+      onmouseover="upDate(this)"
+      onmouseout="undo()"
+      onfocus="upDate(this)"
+      onblur="undo()"
+      tabindex="0"
+    />
 
     <script>
       function upDate(previewPic) {
-        console.log('Mouse over triggered');
-        console.log('Image src: ' + previewPic.src);
-        console.log('Image alt: ' + previewPic.alt);
+        console.log('Mouse or focus event triggered');
+        console.log('Image src:', previewPic.src);
+        console.log('Image alt:', previewPic.alt);
 
-        let imageDiv = document.getElementById('image');
-        imageDiv.style.backgroundImage = "url('" + previewPic.src + "')";
+        const imageDiv = document.getElementById('image');
+        const largeImageSrc = previewPic.src.replace(
+          '&w=100&h=100',
+          '&w=500&h=300',
+        );
+        imageDiv.style.backgroundImage = `url('${largeImageSrc}')`;
         imageDiv.textContent = previewPic.alt;
       }
 
       function undo() {
-        let imageDiv = document.getElementById('image');
-        imageDiv.style.backgroundImage = "url('')";
+        const imageDiv = document.getElementById('image');
+        imageDiv.style.backgroundImage = '';
         imageDiv.textContent = 'Hover over an image below to display here.';
       }
     </script>
