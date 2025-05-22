@@ -1,83 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Accessible Interactive Photo Gallery</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    #image {
-      height: 300px;
-      border: 2px solid black;
-      background-color: #eee;
-      background-size: cover;
-      background-position: center;
-      text-align: center;
-      line-height: 300px;
-      font-size: 20px;
-      color: #333;
-    }
-
-    .gallery {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .gallery img {
-      width: 150px;
-      height: 100px;
-      border: 2px solid gray;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body onload="addTabIndex()">
-
-  <h1>Accessible Interactive Photo Gallery</h1>
-  <div id="image">Hover or focus on an image below to preview it here.</div>
-
-  <div class="gallery">
-    <img src="images/16.jpg" alt="Image 1" onmouseover="upDate(this)" onmouseleave="undo()" onfocus="upDate(this)" onblur="undo()">
-    <img src="images/13.jpg" alt="Image 2" onmouseover="upDate(this)" onmouseleave="undo()" onfocus="upDate(this)" onblur="undo()">
-    <img src="images/15.jpg" alt="Image 3" onmouseover="upDate(this)" onmouseleave="undo()" onfocus="upDate(this)" onblur="undo()">
-    <img src="images/11.jpg" alt="Image 4" onmouseover="upDate(this)" onmouseleave="undo()" onfocus="upDate(this)" onblur="undo()">
-    <img src="images/19.jpg" alt="Image 5" onmouseover="upDate(this)" onmouseleave="undo()" onfocus="upDate(this)" onblur="undo()">
-    <img src="images/20.jpg" alt="Image 6" onmouseover="upDate(this)" onmouseleave="undo()" onfocus="upDate(this)" onblur="undo()">
-  </div>
-
-  <script>
-    function upDate(previewPic) {
-      console.log("Hovered or focused on image:", previewPic.alt);
-      const display = document.getElementById('image');
-      display.innerHTML = previewPic.alt;
-      display.style.backgroundImage = "url('" + previewPic.src + "')";
-    }
-
-    function undo() {
-      console.log("Mouse left or focus lost.");
-      const display = document.getElementById('image');
-      display.innerHTML = "Hover or focus on an image below to preview it here.";
-      display.style.backgroundImage = "none";
-    }
-
-    function addTabIndex() {
-      console.log("Page loaded: adding tabindex...");
-      const images = document.querySelectorAll('.gallery img');
-      for (let i = 0; i < images.length; i++) {
-        images[i].setAttribute('tabindex', '0');
+  <head>
+    <meta charset="UTF-8" />
+    <title>Interactive Photo Gallery</title>
+    <style>
+      #image {
+        width: 500px;
+        height: 300px;
+        border: 1px solid black;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: #555;
+        transition: background-image 0.3s ease;
+        text-align: center;
+        padding: 10px;
       }
-    }
-  </script>
-</body>
+      img {
+        width: 100px;
+        margin-right: 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="image">Hover over an image below to display here.</div>
+
+    <img
+      src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=100&h=100&q=80"
+      alt="Ảnh đầu tiên: Mountain"
+      onmouseover="upDate(this)"
+      onmouseout="undo()"
+      tabindex="0"
+      onfocus="upDate(this)"
+      onblur="undo()"
+    />
+
+    <img
+      src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=100&h=100&q=80"
+      alt="Ảnh thứ hai: Beach"
+      onmouseover="upDate(this)"
+      onmouseout="undo()"
+      tabindex="0"
+      onfocus="upDate(this)"
+      onblur="undo()"
+    />
+
+    <img
+      src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=100&h=100&q=80"
+      alt="Ảnh thứ ba: Forest"
+      onmouseover="upDate(this)"
+      onmouseout="undo()"
+      tabindex="0"
+      onfocus="upDate(this)"
+      onblur="undo()"
+    />
+
+    <script>
+      function upDate(previewPic) {
+        let imageDiv = document.getElementById('image');
+        imageDiv.style.backgroundImage =
+          "url('" +
+          previewPic.src.replace('&w=100&h=100&q=80', '&w=500&h=300&q=80') +
+          "')";
+        imageDiv.innerHTML = '<strong>' + previewPic.alt + '</strong>';
+      }
+
+      function undo() {
+        let imageDiv = document.getElementById('image');
+        imageDiv.style.backgroundImage = "url('')";
+        imageDiv.textContent = 'Hover over an image below to display here.';
+      }
+    </script>
+  </body>
 </html>
